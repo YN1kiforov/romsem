@@ -1,0 +1,23 @@
+.leftPanel {
+	max-width: 220px;
+	width: 100%;
+	margin-top: 26px;
+}
+.wrapper {
+	position: fixed;
+}
+
+.image {
+	width: 180px;
+	height: 137px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 25px;
+	border: solid #a4acad;
+	border-width: 0px 0px 1px 0px;
+}
+.image > img {
+	width: 137px;
+	height: 137px;
+}

@@ -1,0 +1,8 @@
+.Main{
+	background: #F2F2F2;
+	width: 100%;
+	max-width: 1170px;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}

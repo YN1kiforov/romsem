@@ -1,0 +1,159 @@
+.payment {
+	width: 760px;
+	margin: 0 auto;
+}
+input {
+	height: 40px;
+	&.error{
+		border: 2px solid red;
+	}
+	display:flex;
+	flex-grow:0;
+	padding-left: 5px;
+}
+
+.title {
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 30px;
+	margin: 0px 0px 30px 0px;
+}
+.wrapper {
+	display: grid;
+	grid-template-columns: 360px 360px;
+	gap: 40px;
+	margin: 0px 0px 35px 0px;
+}
+.client {
+	display: flex;
+	flex-direction: column;
+	& > div {
+		margin: 20px 0px 0px 0px;
+		&:first-child {
+			margin: 0px 0px 0px 0px;
+			display: flex;
+			justify-content: space-between;
+			& input{
+				width: 170px;
+			}
+		}
+	}
+}
+.change {
+	display: flex;
+	height: 40px;
+	cursor: pointer;
+	div {
+		flex: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		line-height: 22px;
+		background-color: white;
+	}
+}
+.money {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 18px;
+	line-height: 22px;
+	min-height: 40px;
+}
+.comment > input {
+	width: 100%;
+}
+
+.getting {
+	display: flex;
+	flex-direction: column;
+	& > div {
+		margin: 20px 0px 0px 0px;
+		&:first-child {
+			margin: 0px 0px 0px 0px;
+		}
+	}
+}
+.address > input {
+	width: 100%;
+}
+.grid {
+	display: grid;
+	gap: 20px 13px;
+	grid-template-areas:
+		"street street street house"
+		"apartment entrance floor code";
+	grid-template-columns: 80px 80px 80px 80px;
+}
+.howGet {
+	display: flex;
+	height: 40px;
+	cursor: pointer;
+	div {
+		flex: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		line-height: 22px;
+		background-color: white;
+	}
+}
+
+.street {
+	grid-area: street;
+}
+.house {
+	grid-area: house;
+}
+.apartment {
+	grid-area: apartment;
+}
+.entrance {
+	grid-area: entrance;
+}
+.floor {
+	grid-area: floor;
+}
+.code {
+	grid-area: code;
+}
+.mail input {
+	width: 100%;
+}
+.form > button {
+	width: 100%;
+	height: 45px;
+	cursor: pointer;
+	background: #f46d40;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 22px;
+	color: white;
+	transition: all ease 0.6s 0s;
+}
+.form > button:hover{
+	background: #c05531;
+	color: white;
+}
+div .active {
+	background-color: #ff9846;
+	color: white;
+}
+.info{
+	margin: 10px 0px 20px 0px;
+	text-align: center;
+	a {
+		text-decoration: underline;
+		text-underline-position: under;
+		transition: all ease 0.4s 0s;
+		&:hover{
+			color: #f46d40;
+		}
+	}
+}

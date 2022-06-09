@@ -1,0 +1,15 @@
+.item {
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 22px;
+	color: black;
+	padding: 8px 0px 8px 20px;
+	border: solid #A4ACAD;
+	border-width: 0px 0px 1px 0px;
+	
+}
+.item:last-child{
+	color: #FF9846;
+	border-width: 0px 0px 0px 0px;
+}
+

@@ -1,0 +1,37 @@
+*{
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	box-sizing: border-box;
+}
+a{
+	color: black;
+
+	text-decoration: none;
+}
+ul{
+	list-style: none;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}
+button{
+	border: none;
+	outline: none;
+}
+.container{
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+a.link{
+	transition: all ease 0.3s 0s;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+a.link:hover{
+	color: #ff9846;
+}
+
+a.active{
+	color: #ff9846;
+}

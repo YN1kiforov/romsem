@@ -1,0 +1,49 @@
+.top {
+	display: flex;
+	justify-content: space-between;
+}
+.list{
+	margin: 50px 0px 0px 0px;
+}
+.button {
+	color: white;
+	background: #111111;
+	border-radius: 5px;
+	padding: 7px 15px;
+	cursor: pointer;
+	transition: background-color ease .6s 0s;
+}
+.button:hover{
+	background: #FF9846;
+}
+.name {
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 30px;
+}
+.item{
+	padding: 10px 15px;
+	background: #FFFFFF;
+	border-radius: 5px;
+	font-size: 18px;
+	line-height: 22px;
+	margin-bottom: 22px;
+	border: solid 1px black ;
+}
+.item:last-of-type{
+	margin-bottom: 0px;
+}
+.title{
+	font-size: 24px;
+	font-weight: 600;
+	
+	line-height: 30px;
+}
+.comment{
+	margin: 10px 0px 0px 0px;
+}
+
+.date{
+	margin: 0px 0px 0px 20px;
+	color: #A4ACAD;
+}

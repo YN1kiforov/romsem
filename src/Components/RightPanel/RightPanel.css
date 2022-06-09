@@ -1,0 +1,17 @@
+.RightPanel {
+	width: 330px;
+}
+.wrapper {
+	position: fixed;
+	width: 330px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-top: 26px;
+	padding-bottom: 80px;
+	height: 100vh;
+	max-height: 100vh;
+}
+.info li span {
+	float: right;
+}
