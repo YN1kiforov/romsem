@@ -4,13 +4,25 @@
 }
 input {
 	height: 40px;
+	padding: 0px;
 	&.error{
 		border: 2px solid red;
 	}
+	
 	display:flex;
 	flex-grow:0;
 	padding-left: 5px;
 }
+
+.input{
+	// width: calc(50% - 10px);
+	background-color: #fff;
+	input{
+		
+		padding-right: 15px;
+	}
+}
+ 
 
 .title {
 	font-weight: 500;
@@ -25,20 +37,32 @@ input {
 	margin: 0px 0px 35px 0px;
 }
 .client {
-	display: flex;
-	flex-direction: column;
-	& > div {
-		margin: 20px 0px 0px 0px;
-		&:first-child {
-			margin: 0px 0px 0px 0px;
-			display: flex;
-			justify-content: space-between;
-			& input{
-				width: 170px;
-			}
-		}
-	}
+	display: grid;
+	grid-template-areas:
+	"phone name"
+	"change change"
+	"money money"
+	"comment comment";
+	gap: 20px 13px;
+	grid-template-rows: 40px 40px 40px 40px;
+	grid-template-columns: 160px 160px;
 }
+.phone{
+	grid-area: phone;
+}
+.name{
+	grid-area: name;
+}
+.change{
+	grid-area: change;
+}
+.money{
+	grid-area: money;
+}
+.comment{
+	grid-area: comment;
+}
+
 .change {
 	display: flex;
 	height: 40px;
@@ -59,7 +83,13 @@ input {
 	align-items: center;
 	font-size: 18px;
 	line-height: 22px;
-	min-height: 40px;
+	
+	& div{
+		&:first-of-type{
+			flex-shrink: 0;
+			padding: 0px 10px 0px 0px;
+		}
+	}
 }
 .comment > input {
 	width: 100%;
@@ -81,10 +111,11 @@ input {
 .grid {
 	display: grid;
 	gap: 20px 13px;
-	grid-template-areas:
-		"street street street house"
-		"apartment entrance floor code";
 	grid-template-columns: 80px 80px 80px 80px;
+	grid-template-areas:
+		"street street street street"
+		"apartment entrance floor code";
+
 }
 .howGet {
 	display: flex;
@@ -104,21 +135,7 @@ input {
 .street {
 	grid-area: street;
 }
-.house {
-	grid-area: house;
-}
-.apartment {
-	grid-area: apartment;
-}
-.entrance {
-	grid-area: entrance;
-}
-.floor {
-	grid-area: floor;
-}
-.code {
-	grid-area: code;
-}
+
 .mail input {
 	width: 100%;
 }
