@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import InputMask from 'react-input-mask';
+import Autocomplete from '@mui/material/Autocomplete';
 
 function Payment(props) {
 	const validationSchema = yup.object({
@@ -25,9 +26,35 @@ function Payment(props) {
 				}
 			)
 	});
+	const onChangeAddress = (query) => {
+		var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+		var token = "5af9830e3f39971a59d1bacd685dc02fd5b9962a";
 
-
-
+		var options = {
+			method: "POST",
+			mode: "cors",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": "Token " + token
+			},
+			body: JSON.stringify({ query: query, count: 2 })
+		}
+		function addressFormatter(query) {
+			let array = JSON.parse(query).suggestions
+			let result = array.map((item) => {
+				if (item) {
+					return item.value
+				}
+			})
+			return result
+		}
+		fetch(url, options)
+			.then(response => response.text())
+			.then(result => setOptions(addressFormatter(result)))
+			.catch(error => console.log("error", error));
+	}
+	const [options, setOptions] = useState([])
 
 	const formik = useFormik({
 		initialValues: {
@@ -62,7 +89,7 @@ function Payment(props) {
 							onChange={formik.handleChange}
 							maskChar=" "
 						>
-							{() => <TextField variant="outlined" label="Телефон*" size='small' className={`${s.phone} ${s.input}`}  name ="phone" />}
+							{() => <TextField variant="outlined" label="Телефон*" size='small' className={`${s.phone} ${s.input}`} name="phone" />}
 						</InputMask>
 
 						<TextField name='name' variant="outlined" label="Имя*" size='small'
@@ -102,15 +129,30 @@ function Payment(props) {
 						</div>
 						{deliveryActiveTab === 'courier'
 							? <div className={`${s.address} ${s.grid}`}>
-								<TextField value={formik.values.street} onChange={formik.handleChange} variant="outlined" label="Адрес*" size='small' name='address' key="1"
-									className={formik.errors.street && formik.touched.street ? `${s.street} ${s.input} ${s.error}` : `${s.street} ${s.input}`}></TextField>
+								<Autocomplete
+									filterOptions={(x) => x}
+									id="free-solo-demo"
+									freeSolo
+									className={formik.errors.street && formik.touched.street ? `${s.street} ${s.input} ${s.error}` : `${s.street} ${s.input}`}
+									options={options}
+									onChange={(e,newValue) => {formik.setFieldValue('address', newValue)}}
+									renderInput={(params) => <TextField {...params} label="Адрес*" size='small'
+										name='address'
+										onChange={(e) => {onChangeAddress(e.target.value); formik.setFieldValue('address', e.target.value)}}
+										
+										value={formik.values.street}
+									/>}
+								/>
+								{/* <TextField value={formik.values.street} onChange={formik.handleChange} variant="outlined" label="Адрес*" size='small' name='address' key="1"
+									className={formik.errors.street && formik.touched.street ? `${s.street} ${s.input} ${s.error}` : `${s.street} ${s.input}`}></TextField> */}
+
 								<TextField value={formik.values.apartment} onChange={formik.handleChange} className={s.input} variant="outlined" label="Кв" size='small' name='apartment'></TextField>
 								<TextField value={formik.values.entrance} onChange={formik.handleChange} className={s.input} variant="outlined" label="Подъезд" size='small' name='entrance'></TextField>
 								<TextField value={formik.values.floor} onChange={formik.handleChange} className={s.input} variant="outlined" label="Этаж" size='small' name='floor'></TextField>
 								<TextField value={formik.values.code} onChange={formik.handleChange} className={s.input} variant="outlined" label="Код" size='small' name='code' ></TextField>
 							</div>
 							: <div className={`${s.address}`}>
-								<TextField onChange={formik.handleChange} key="0" className={s.input} variant="outlined" label="Адрес" size='small' disabled value=""></TextField>
+								<TextField onChange={formik.handleChange} key="0" className={s.input} fullWidth variant="outlined" label="Адрес" size='small' disabled value=""></TextField>
 							</div>}
 
 						<div className={s.mail}>
