@@ -6,8 +6,6 @@ let initialState = {
 	]
 }
 
-let ADD_TO_CART = 'ADD-TO-CART'
-let REMOVE_FROM_CART = 'REMOVE-FROM-CART'
 
 let reviewReducer = (state = initialState, action) => {
 	return state

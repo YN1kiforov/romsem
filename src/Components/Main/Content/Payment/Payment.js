@@ -1,13 +1,21 @@
 import './../Content.scss';
 import s from './Payment.module.scss'
-import { Formik, input, Form, useFormik, yupToFormErrors, formik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import InputMask from 'react-input-mask';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import Autocomplete from '@mui/material/Autocomplete';
 
 function Payment(props) {
+	const [addressOptions, setAddressOptions] = useState([])
+	const [paymentActiveTab, setPaymentActiveTab] = useState('cash')
+	const [deliveryActiveTab, setDeliveryActiveTab] = useState('courier')
+
 	const validationSchema = yup.object({
 		mail: yup
 			.string('Enter your email')
@@ -38,24 +46,13 @@ function Payment(props) {
 				"Accept": "application/json",
 				"Authorization": "Token " + token
 			},
-			body: JSON.stringify({ query: query, count: 2 })
-		}
-		function addressFormatter(query) {
-			let array = JSON.parse(query).suggestions
-			let result = array.map((item) => {
-				if (item) {
-					return item.value
-				}
-			})
-			return result
+			body: JSON.stringify({ query: query, count: 4 })
 		}
 		fetch(url, options)
 			.then(response => response.text())
-			.then(result => setOptions(addressFormatter(result)))
-			.catch(error => console.log("error", error));
+			.then(result => setAddressOptions(JSON.parse(result).suggestions))
+			.catch(error => console.log("Error: ", error));
 	}
-	const [options, setOptions] = useState([])
-
 	const formik = useFormik({
 		initialValues: {
 			name: "",
@@ -69,14 +66,11 @@ function Payment(props) {
 			floor: "",
 			code: "",
 			mail: "",
-
 		},
 		onSubmit: (values) => {
 			alert(JSON.stringify(values, null, 2));
 		},
 	});
-	const [paymentActiveTab, setPaymentActiveTab] = useState('cash')
-	const [deliveryActiveTab, setDeliveryActiveTab] = useState('courier')
 	return (
 		<div className={s.payment}>
 			<div className={s.title}>Ваши данные</div>
@@ -91,20 +85,16 @@ function Payment(props) {
 						>
 							{() => <TextField variant="outlined" label="Телефон*" size='small' className={`${s.phone} ${s.input}`} name="phone" />}
 						</InputMask>
-
 						<TextField name='name' variant="outlined" label="Имя*" size='small'
 							value={formik.values.name}
 							onChange={formik.handleChange}
 							className={formik.errors.name && formik.touched.name ? `${s.name} ${s.input} ${s.error}` : `${s.input} ${s.name}`}
 						>
-
 						</TextField>
-
 						<div className={s.change}>
 							<div onClick={() => setPaymentActiveTab('cash')} className={paymentActiveTab === 'cash' ? s.active : ''}>Наличными</div>
 							<div onClick={() => setPaymentActiveTab('card')} className={paymentActiveTab === 'card' ? s.active : ''}>Картой</div>
 						</div>
-
 						{paymentActiveTab === 'cash'
 							? <div className={s.money}>
 								<div>Подготовить сдачу с</div>
@@ -134,27 +124,38 @@ function Payment(props) {
 									id="free-solo-demo"
 									freeSolo
 									className={formik.errors.street && formik.touched.street ? `${s.street} ${s.input} ${s.error}` : `${s.street} ${s.input}`}
-									options={options}
-									onChange={(e,newValue) => {formik.setFieldValue('address', newValue)}}
+									options={addressOptions.map((item) => {
+										if (item) {
+											return item.value
+										}
+									})}
+									onChange={(e, newValue) => { formik.setFieldValue('address', newValue) }}
 									renderInput={(params) => <TextField {...params} label="Адрес*" size='small'
 										name='address'
-										onChange={(e) => {onChangeAddress(e.target.value); formik.setFieldValue('address', e.target.value)}}
-										
+										onChange={(e) => { onChangeAddress(e.target.value); formik.setFieldValue('address', e.target.value) }}
+
 										value={formik.values.street}
 									/>}
 								/>
-								{/* <TextField value={formik.values.street} onChange={formik.handleChange} variant="outlined" label="Адрес*" size='small' name='address' key="1"
-									className={formik.errors.street && formik.touched.street ? `${s.street} ${s.input} ${s.error}` : `${s.street} ${s.input}`}></TextField> */}
-
 								<TextField value={formik.values.apartment} onChange={formik.handleChange} className={s.input} variant="outlined" label="Кв" size='small' name='apartment'></TextField>
 								<TextField value={formik.values.entrance} onChange={formik.handleChange} className={s.input} variant="outlined" label="Подъезд" size='small' name='entrance'></TextField>
 								<TextField value={formik.values.floor} onChange={formik.handleChange} className={s.input} variant="outlined" label="Этаж" size='small' name='floor'></TextField>
 								<TextField value={formik.values.code} onChange={formik.handleChange} className={s.input} variant="outlined" label="Код" size='small' name='code' ></TextField>
 							</div>
 							: <div className={`${s.address}`}>
-								<TextField onChange={formik.handleChange} key="0" className={s.input} fullWidth variant="outlined" label="Адрес" size='small' disabled value=""></TextField>
+								<FormControl size='small' fullWidth className={formik.errors.street && formik.touched.street ? `${s.street} ${s.input} ${s.error}` : `${s.street} ${s.input}`}>
+									<InputLabel>Адрес*</InputLabel>
+									<Select
+										value={formik.values.address}
+										label="Адрес*"
+										onChange={(e) => { formik.setFieldValue('address', e.target.value) }}
+									>
+										{props.addresses[props.currentCity].map(address => {
+											return <MenuItem value={address}>{address}</MenuItem>
+										})}
+									</Select>
+								</FormControl>
 							</div>}
-
 						<div className={s.mail}>
 							<TextField value={formik.values.mail} onChange={formik.handleChange} fullWidth className={s.input} variant="outlined" label="E-mail(необязательно)" size='small' name='mail'></TextField>
 						</div>
@@ -162,12 +163,10 @@ function Payment(props) {
 				</div>
 				<button type="submit">Оформить заказ</button>
 			</form>
-
 			<div className={s.info}>
 				Нажимая на кнопку Оформить заказ, Вы подтверждаете свое согласие на обработку персональных данных в соответствии с <a href='#'>Публичной оффертой</a>
 			</div>
 		</div>
-
 	);
 }
 export default Payment;

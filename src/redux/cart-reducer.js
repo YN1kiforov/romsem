@@ -15,7 +15,6 @@ let cartReducer = (state = initialState, action) => {
 
 	let stateCopy = JSON.parse(JSON.stringify(state))
 
-
 	function checkCartIsEmpty() {
 		Object.keys(stateCopy.cart).length ? stateCopy.cartIsEmpty = false : stateCopy.cartIsEmpty = true
 	}

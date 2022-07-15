@@ -2,7 +2,6 @@ import './../Content.scss';
 import React from 'react';
 import './ProductList.css'
 
-import { useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 import ProductItem from './ProductItem/ProductItem';
 import { AddToCartAC } from './../../../../redux/cart-reducer'

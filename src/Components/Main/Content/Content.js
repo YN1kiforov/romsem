@@ -1,11 +1,5 @@
-
 import './Content.scss';
-import { Routes, Route, Switch, useLocation } from "react-router-dom";
-
-
-import ProductListContainer from './ProductList/ProductListContainer';
-import MainPage from './MainPage/MainPage';
-import Payment from './Payment/Payment';
+import { Routes, Route} from "react-router-dom";
 
 
 import PaymentContainer from './Payment/PaymentContainer';

@@ -1,8 +1,7 @@
 import './Main.css';
-import Content from './Content/Content';
 import ContentContainer from './Content/ContentContainer';
-import Header from './Header/Header';
 import Footer from './Footer/Footer';
+import HeaderContainer from './Header/HeaderContainer';
 
 
 
@@ -10,7 +9,7 @@ function Main(props) {
 
   return (
     <div className="Main">
-      <Header/>
+      <HeaderContainer/>
       <ContentContainer/>
       <Footer/>
     </div>
